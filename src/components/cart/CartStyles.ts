@@ -87,34 +87,6 @@ export const CartItemButton = styled.button`
   }
 `
 
-export const CartItemMinusButton = styled.button`
-  position: absolute;
-  right: 30px;
-  bottom: 10px;
-  background: none;
-  border: none;
-  font-size: 14px;
-  cursor: pointer;
-  color: ${theme.colors.primaryColor};
-
-  ${media.sm} {
-    font-size: 3rem;
-    right: 80px;
-    bottom: 5px;
-  }
-`
-
-export const CartItemQauntity = styled.p`
-  position: absolute;
-  right: 10px;
-  top: 10px;
-  background: none;
-  border: none;
-  font-size: 20px;
-  cursor: pointer;
-  color: ${theme.colors.primaryColor};
-`
-
 export const CartDesdcription = styled.div`
   width: 100%;
   display: flex;
