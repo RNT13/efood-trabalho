@@ -57,6 +57,7 @@ export const RestaurantPageContent = styled.div`
 export const RestaurantPageCard = styled(Card)`
   background-color: ${theme.colors.primaryColor};
   color: ${theme.colors.textColor};
+  width: 100%;
 
   ${ButtonContainer} {
     width: 100%;
@@ -65,17 +66,20 @@ export const RestaurantPageCard = styled(Card)`
   }
 
   ${CardImage} {
-    width: 300px;
+    width: 100%;
     height: 160px;
     padding: 10px;
   }
 
   ${CardTitle} {
-    width: 50%;
+    width: 100%;
+    font-size: 16px;
+    color: ${theme.colors.secondaryColor};
   }
 
-  ${CardPrice} {
-    width: 50%;
+  ${CardDescription} {
+    font-size: 14px;
+    color: ${theme.colors.secondaryColor};
   }
 
   ${media.sm} {
@@ -105,14 +109,6 @@ export const RestaurantPageCard = styled(Card)`
       font-size: 2.5rem;
       text-align: right;
       margin-bottom: 8px;
-    }
-
-    ${CardDescription} {
-      width: 100%;
-      height: auto;
-      font-size: 2rem;
-      margin-bottom: 16px;
-      line-height: 1.4;
     }
 
     ${ButtonContainer} {

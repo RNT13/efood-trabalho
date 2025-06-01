@@ -60,8 +60,8 @@ export const DeliveryLabel = styled.label`
 export const DeliveryInput = styled.input`
   width: 100%;
   padding: 8px;
-  border: 1px solid ${theme.colors.secondaryColor};
-  background-color: ${theme.colors.tertiaryColor};
+  border: 1px solid ${theme.colors.textColor};
+  background-color: ${theme.colors.secondaryColor};
   color: ${theme.colors.black};
   font-size: 14px;
 `

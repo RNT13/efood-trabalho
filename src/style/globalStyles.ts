@@ -12,7 +12,7 @@ export const GlobalStyle = createGlobalStyle`
     body {
       font-family: "Roboto", sans-serif;
       font-weight: bold;
-      background-color: ${theme.colors.secondaryColor};
+      background-color: ${theme.colors.textColor};
       overflow-x: hidden;
     }
 

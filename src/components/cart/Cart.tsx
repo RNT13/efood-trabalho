@@ -27,9 +27,9 @@ const Cart: React.FC<CartProps> = ({ onContinue }) => {
 
   const expandedCartItems = cartItems.flatMap(item => Array.from({ length: item.quantity }, () => item))
 
-  const totalPrice = expandedCartItems.reduce((total, item) => {
-    const price = parseFloat(item.price.replace('R$', '').replace(',', '.'))
-    return total + price
+  const totalPrice = cartItems.reduce((acc, item) => {
+    const priceNumber = typeof item.price === 'string' ? Number(item.price.replace('R$', '').replace(',', '.').trim()) : Number(item.price)
+    return acc + priceNumber
   }, 0)
 
   const handleRemoveItem = (foodId: string) => {

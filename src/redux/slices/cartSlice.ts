@@ -1,7 +1,12 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import FoodModel from '../../models/FoodModels'
 
-type CartItem = FoodModel & { quantity: number }
+type CartItem = {
+  foodId: string
+  title: string
+  price: string
+  image: string
+  quantity: number
+}
 
 type CartState = {
   items: CartItem[]
@@ -11,11 +16,18 @@ const initialState: CartState = {
   items: []
 }
 
+type AddToCartPayload = {
+  foodId: string
+  title: string
+  price: string
+  image: string
+}
+
 export const cartSlice = createSlice({
   name: 'cart',
   initialState,
   reducers: {
-    addToCart: (state, action: PayloadAction<FoodModel>) => {
+    addToCart: (state, action: PayloadAction<AddToCartPayload>) => {
       const existingItem = state.items.find(item => item.foodId === action.payload.foodId)
 
       if (existingItem) {

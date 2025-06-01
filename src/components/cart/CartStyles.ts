@@ -45,7 +45,7 @@ export const CartItem = styled.li`
   padding: 10px;
   margin-bottom: 10px;
   height: 100px;
-  background-color: ${theme.colors.tertiaryColor};
+  background-color: ${theme.colors.secondaryColor};
 `
 
 export const CartItemInfo = styled.div`

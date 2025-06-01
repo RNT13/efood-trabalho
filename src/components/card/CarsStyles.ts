@@ -11,7 +11,7 @@ export const CardContainer = styled.div`
   height: 100%;
   width: 100%;
   border: 1px solid ${theme.colors.primaryColor};
-  background-color: ${theme.colors.secondaryColor};
+  background-color: ${theme.colors.textColor};
   color: ${theme.colors.primaryColor};
   box-shadow: 3px 3px 15px ${theme.colors.black};
 `
