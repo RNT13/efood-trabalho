@@ -27,7 +27,7 @@ export const AsideBarContainer = styled.div`
   flex-direction: column;
   overflow-y: auto;
   position: fixed;
-  padding: 20px;
+  padding: 32px 8px 0 8px;
   padding-bottom: 10%;
   top: 0;
   right: 0;

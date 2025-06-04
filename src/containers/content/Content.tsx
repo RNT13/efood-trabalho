@@ -50,7 +50,7 @@ const Content = () => {
             country={restaurant.tipo}
             highlight={restaurant.destacado}
           >
-            <ContentCardButton to={`/RestaurantPage/${restaurant.id}/${restaurant.titulo}`}>Ver Restaurante</ContentCardButton>
+            <ContentCardButton to={`/RestaurantPage/${restaurant.id}/${restaurant.titulo}`}>Saiba mais</ContentCardButton>
           </ContentCard>
         ))}
       </ContentList>

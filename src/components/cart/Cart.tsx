@@ -11,9 +11,7 @@ import {
   CartItemButton,
   CartItemImage,
   CartItemInfo,
-  CartItemPrice,
-  CartItemTotal,
-  CartText
+  CartItemPrice
 } from './CartStyles'
 
 interface CartProps {
@@ -55,8 +53,8 @@ const Cart: React.FC<CartProps> = ({ onContinue }) => {
         ))}
       </CartContent>
       <CartDesdcription>
-        <CartText>Valor Total:</CartText>
-        <CartItemTotal>R$ {totalPrice.toFixed(2).replace('.', ',')}</CartItemTotal>
+        <p>Valor Total:</p>
+        <p>R$ {totalPrice.toFixed(2).replace('.', ',')}</p>
       </CartDesdcription>
       <CartButton onClick={() => onContinue(totalPrice)}>Continuar com a entrega</CartButton>
     </CartContainer>

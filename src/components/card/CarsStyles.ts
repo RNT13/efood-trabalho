@@ -31,17 +31,17 @@ export const CardImage = styled.img`
 `
 
 export const CardContent = styled.div`
-  padding: 10px;
+  padding: 8px 8px 16px 8px;
   height: 100%;
 `
 
 export const CardDescription = styled.div`
   font-size: 14px;
-  line-height: 20px;
+  line-height: 22px;
 `
 
 export const CardTitle = styled.h2`
-  margin-bottom: 10px;
+  margin-bottom: 16px;
   display: inline-block;
   width: 80%;
   text-align: left;
@@ -59,13 +59,14 @@ export const CardStars = styled.h3`
 `
 
 export const CardPrice = styled.h3`
-  margin-bottom: 10px;
+  margin-bottom: 16px;
   display: inline-block;
   width: 20%;
   text-align: right;
 `
 
 export const CardFooter = styled.div`
-  padding: 10px;
+  display: flex;
   width: 100%;
+  padding: 0px 8px 8px 8px;
 `

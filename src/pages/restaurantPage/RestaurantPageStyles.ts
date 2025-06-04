@@ -6,7 +6,6 @@ import { media } from '../../style/media'
 import { theme } from '../../style/theme'
 
 export const RestaurantPageContainer = styled.div`
-  padding: 50px 0;
   width: 100%;
   height: 100%;
   display: flex;
@@ -68,7 +67,7 @@ export const RestaurantPageCard = styled(Card)`
   ${CardImage} {
     width: 100%;
     height: 160px;
-    padding: 10px;
+    padding: 8px;
   }
 
   ${CardTitle} {

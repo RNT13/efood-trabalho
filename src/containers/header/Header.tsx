@@ -3,11 +3,27 @@ import { useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import AsideBar from '../../components/asideBar/AsideBar'
 import { RootState } from '../../redux/store'
+import { OverLay } from '../../style/globalStyles'
 import { getRestaurantById } from '../../utils/api'
 import { RestaurantType } from '../content/Content'
-import { HeaderContainer, HeaderImage, HeaderLogo, HeaderNavMenu, HeaderSpan, HeaderText, HeaderTitle, HomeContainer, NavItem } from './HeaderStyles'
+import {
+  HeaderContainer,
+  HeaderLogo,
+  HeaderMainContent,
+  HeaderNavMenu,
+  HeaderRestaurantBanner,
+  HeaderRestaurantBannerText,
+  HeaderRestaurantContent,
+  HeaderSpan,
+  HeaderText,
+  NavItem
+} from './HeaderStyles'
 
-const Header = () => {
+interface HeaderProps {
+  onClose: () => void
+}
+
+const Header = ({ onClose }: HeaderProps) => {
   const { id } = useParams<{ id: string }>()
   const [showAsideBar, setShowAsideBar] = useState(false)
   const [restaurant, setRestaurant] = useState<RestaurantType | null>(null)
@@ -40,24 +56,29 @@ const Header = () => {
   return (
     <HeaderContainer>
       {id ? (
-        <>
+        <HeaderRestaurantContent>
           <HeaderNavMenu className="container">
             <NavItem to="/">Restaurantes</NavItem>
             <HeaderLogo src="/images/logo.png" alt="Logo" />
             <HeaderSpan onClick={handleOpenAsideBar}>{totalItems} produto(s) no carrinho</HeaderSpan>
           </HeaderNavMenu>
-          <div className="container">
-            <HeaderTitle className="title">{restaurant?.titulo || 'Carregando...'}</HeaderTitle>
-          </div>
-          {restaurant?.capa && <HeaderImage src={restaurant.capa} alt={restaurant.titulo} />}
-        </>
+          <HeaderRestaurantBanner style={{ backgroundImage: `url(${restaurant?.capa})` }}>
+            <OverLay onClick={onClose} />
+            <HeaderRestaurantBannerText className="container">
+              <span>{restaurant?.tipo || 'Carregando...'}</span>
+              <span>{restaurant?.titulo || 'Carregando...'}</span>
+            </HeaderRestaurantBannerText>
+          </HeaderRestaurantBanner>
+          {showAsideBar && <AsideBar onClose={handleCloseAsideBar} />}
+        </HeaderRestaurantContent>
       ) : (
-        <HomeContainer>
+        <HeaderMainContent>
           <HeaderLogo src="/images/logo.png" alt="Logo" />
-          <HeaderText>Viva experiências gastronômicas no conforto da sua casa!</HeaderText>
-        </HomeContainer>
+          <HeaderText>
+            Viva experiências gastronômicas <br /> no conforto da sua casa!
+          </HeaderText>
+        </HeaderMainContent>
       )}
-      {showAsideBar && <AsideBar onClose={handleCloseAsideBar} />}
     </HeaderContainer>
   )
 }

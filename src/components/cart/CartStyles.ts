@@ -32,8 +32,11 @@ export const CartContainer = styled.div`
 `
 
 export const CartContent = styled.ul`
-  flex: 1;
-  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  overflow-y: scroll;
+  height: 100%;
+
   &::-webkit-scrollbar {
     width: 0;
   }
@@ -42,8 +45,8 @@ export const CartContent = styled.ul`
 export const CartItem = styled.li`
   position: relative;
   display: flex;
-  padding: 10px;
-  margin-bottom: 10px;
+  padding: 8px;
+  margin-bottom: 16px;
   height: 100px;
   background-color: ${theme.colors.secondaryColor};
 `
@@ -51,8 +54,8 @@ export const CartItem = styled.li`
 export const CartItemInfo = styled.div`
   font-size: 18px;
   font-weight: 900;
-  margin-left: 10px;
-  gap: 20px;
+  margin-left: 8px;
+  gap: 16px;
   display: flex;
   flex-direction: column;
   color: ${theme.colors.primaryColor};
@@ -70,8 +73,8 @@ export const CartItemImage = styled.img`
 
 export const CartItemButton = styled.button`
   position: absolute;
-  right: 10px;
-  bottom: 10px;
+  right: 8px;
+  bottom: 8px;
   background: none;
   border: none;
   font-size: 14px;
@@ -90,25 +93,17 @@ export const CartItemButton = styled.button`
 export const CartDesdcription = styled.div`
   width: 100%;
   display: flex;
-  margin-top: 10px;
-`
+  justify-content: space-between;
+  align-items: center;
 
-export const CartText = styled.p`
-  width: 50%;
-  text-align: left;
-  font-weight: bold;
-  color: ${theme.colors.secondaryColor};
-`
-
-export const CartItemTotal = styled.p`
-  width: 50%;
-  text-align: right;
-  font-weight: bold;
-  color: ${theme.colors.secondaryColor};
+  p {
+    font-size: 14px;
+    font-weight: 700;
+    color: ${theme.colors.secondaryColor};
+  }
 `
 
 export const CartButton = styled(ButtonContainer)`
-  margin-top: 20px;
   background-color: ${theme.colors.secondaryColor};
   color: ${theme.colors.primaryColor};
 

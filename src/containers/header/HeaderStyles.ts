@@ -7,19 +7,14 @@ export const HeaderWrapper = styled.div`
   grid-area: header;
 `
 
-export const HeaderImage = styled.img`
-  object-fit: cover;
-  filter: brightness(40%);
-  height: 250px;
-  width: 100%;
-`
-
 export const HeaderNavMenu = styled.nav`
-  position: relative;
   display: flex;
   align-items: center;
   justify-content: space-between;
   width: 100%;
+  max-height: 100%;
+  width: 100%;
+  padding: 0px 0 64px 0;
 
   ${(media.md, media.sm)} {
     flex-direction: column-reverse;
@@ -27,25 +22,38 @@ export const HeaderNavMenu = styled.nav`
   }
 `
 
-export const HeaderTitle = styled.div`
+export const HeaderRestaurantBanner = styled.div`
   position: relative;
-  top: 220px;
-  left: 0px;
-  font-size: 36px;
-  color: ${theme.colors.textColor};
-  text-align: left;
-  z-index: 1;
-
-  span {
-    margin-left: 20px;
-  }
-  svg {
-    color: ${theme.colors.yellow3};
-  }
+  height: 280px;
+  width: 100%;
+  background-size: cover;
 
   ${(media.md, media.sm)} {
     padding-left: 50px;
     font-size: 2.5em;
+  }
+`
+
+export const HeaderRestaurantBannerText = styled.div`
+  position: relative;
+  height: 100%;
+  width: 100%;
+  padding: 24px 0 32px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: space-between;
+  color: ${theme.colors.textColor};
+  z-index: 1;
+
+  span:first-child {
+    font-weight: 100;
+    font-size: 32px;
+  }
+
+  span {
+    font-weight: 900;
+    font-size: 32px;
   }
 `
 
@@ -62,21 +70,6 @@ export const HeaderSpan = styled.p`
   ${(media.md, media.sm)} {
     font-size: 3rem;
   }
-`
-
-export const HeaderLogo = styled.img`
-  width: 100px;
-  height: auto;
-
-  ${(media.md, media.sm)} {
-    width: 200px;
-  }
-`
-
-export const HeaderText = styled.p`
-  font-size: 36px;
-  color: ${theme.colors.primaryColor};
-  text-align: center;
 `
 
 export const NavItem = styled(Link)`
@@ -96,29 +89,50 @@ export const NavItem = styled(Link)`
   }
 `
 
-export const HomeContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 100px;
+export const HeaderLogo = styled.img`
+  width: 124px;
+  height: 58px;
 
-  ${media.sm} {
-    gap: 150px;
+  ${(media.md, media.sm)} {
+    width: 200px;
   }
 `
 
-export const HeaderContainer = styled.div`
-  padding-top: 50px;
-  width: 100%;
-  gap: 20px;
-  height: 310px;
+export const HeaderText = styled.p`
+  font-size: 36px;
+  color: ${theme.colors.primaryColor};
+  text-align: center;
+`
 
-  justify-content: space-around;
+export const HeaderContainer = styled.div`
+  width: 100%;
+  height: 400px;
+
   background-image: url('/images/Vector.png');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+`
+
+export const HeaderMainContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  height: 400px;
+  padding: 40px 0;
+`
+
+export const HeaderRestaurantContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 100%;
+  width: 100%;
+  height: 100%;
+  padding: 40px 0 0 0;
 
   ${media.sm} {
     width: 900px;
@@ -137,12 +151,8 @@ export const HeaderContainer = styled.div`
       order: 3;
     }
 
-    ${HeaderTitle} {
+    ${HeaderRestaurantBanner} {
       order: 4;
-    }
-
-    ${HeaderImage} {
-      order: 5;
     }
   }
 `
