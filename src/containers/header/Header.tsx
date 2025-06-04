@@ -19,11 +19,7 @@ import {
   NavItem
 } from './HeaderStyles'
 
-interface HeaderProps {
-  onClose: () => void
-}
-
-const Header = ({ onClose }: HeaderProps) => {
+const Header = () => {
   const { id } = useParams<{ id: string }>()
   const [showAsideBar, setShowAsideBar] = useState(false)
   const [restaurant, setRestaurant] = useState<RestaurantType | null>(null)
@@ -63,7 +59,7 @@ const Header = ({ onClose }: HeaderProps) => {
             <HeaderSpan onClick={handleOpenAsideBar}>{totalItems} produto(s) no carrinho</HeaderSpan>
           </HeaderNavMenu>
           <HeaderRestaurantBanner style={{ backgroundImage: `url(${restaurant?.capa})` }}>
-            <OverLay onClick={onClose} />
+            <OverLay />
             <HeaderRestaurantBannerText className="container">
               <span>{restaurant?.tipo || 'Carregando...'}</span>
               <span>{restaurant?.titulo || 'Carregando...'}</span>
