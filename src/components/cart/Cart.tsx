@@ -27,7 +27,7 @@ const Cart: React.FC<CartProps> = ({ onContinue }) => {
 
   const totalPrice = cartItems.reduce((acc, item) => {
     const priceNumber = typeof item.price === 'string' ? Number(item.price.replace('R$', '').replace(',', '.').trim()) : Number(item.price)
-    return acc + priceNumber
+    return acc + priceNumber * item.quantity
   }, 0)
 
   const handleRemoveItem = (foodId: string) => {
