@@ -80,7 +80,13 @@ const RestaurantPage = () => {
     <RestaurantPageContainer className="container">
       <RestaurantPageContent>
         {restaurant.cardapio.map(food => (
-          <RestaurantPageCard key={food.id} image={food.foto} title={food.nome} description={food.descricao} foodId={food.id}>
+          <RestaurantPageCard
+            key={food.id}
+            image={food.foto}
+            title={food.nome}
+            description={food.descricao.length > 135 ? food.descricao.slice(0, 135) + '...' : food.descricao}
+            foodId={food.id}
+          >
             <RestaurantCardButton onClick={() => handleOpenPopup(food)}>Ver Prato</RestaurantCardButton>
           </RestaurantPageCard>
         ))}
@@ -88,7 +94,7 @@ const RestaurantPage = () => {
 
       {showPopup && popupData && (
         <Popup message={popupData.porcao} onClose={handleClosePopup} image={popupData.foto} desdcription={popupData.descricao} title={popupData.nome}>
-          <PopupButton onClick={handleAddToCart}>Adicionar ao carrinho - {popupData.preco}</PopupButton>
+          <PopupButton onClick={handleAddToCart}>Adicionar ao carrinho - R$ {popupData.preco}</PopupButton>
         </Popup>
       )}
     </RestaurantPageContainer>
