@@ -42,7 +42,7 @@ const Cart: React.FC<CartProps> = ({ onContinue }) => {
             <CartItemImage src={item.image} alt={item.title} />
             <CartItemInfo>
               <p>{item.title}</p>
-              <CartItemPrice>{item.price}</CartItemPrice>
+              <CartItemPrice>R$ {item.price}</CartItemPrice>
             </CartItemInfo>
             <div>
               <CartItemButton onClick={() => handleRemoveItem(item.foodId)}>

@@ -1,56 +1,27 @@
-import { useEffect, useState } from 'react'
-import { getRestaurants } from '../../utils/api'
+import { useGetRestaurantsQuery } from '../../redux/api/restaurantsApi'
 import { ContentCard, ContentCardButton, ContentContainer, ContentList } from './ContentStyles'
 
-export type RestaurantType = {
-  id: number
-  titulo: string
-  descricao: string
-  capa: string
-  tipo: string
-  destacado: boolean
-  avaliacao: number
-}
-
 const Content = () => {
-  const [restaurants, setRestaurants] = useState<RestaurantType[]>([])
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState<string | null>(null)
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const data = await getRestaurants()
-        console.log('Restaurantes:', data)
-        setRestaurants(data)
-      } catch (err) {
-        console.error(err)
-        setError('Erro ao carregar restaurantes')
-      } finally {
-        setLoading(false)
-      }
-    }
-    fetchData()
-  }, [])
+  const { data: restaurants = [], isLoading: loading, error } = useGetRestaurantsQuery()
 
   if (loading) return <p>Carregando...</p>
-  if (error) return <p>{error}</p>
+  if (error) return <p>Erro ao carregar restaurantes</p>
 
   return (
     <ContentContainer className="container">
       <ContentList>
-        {restaurants.map(restaurant => (
+        {restaurants.map(restaurantType => (
           <ContentCard
-            key={restaurant.id}
-            restaurantId={restaurant.id.toString()}
-            image={restaurant.capa}
-            title={restaurant.titulo}
-            description={restaurant.descricao}
-            stars={restaurant.avaliacao}
-            country={restaurant.tipo}
-            highlight={restaurant.destacado}
+            key={restaurantType.id}
+            restaurantId={restaurantType.id.toString()}
+            image={restaurantType.capa}
+            title={restaurantType.titulo}
+            description={restaurantType.descricao}
+            stars={restaurantType.avaliacao}
+            country={restaurantType.tipo}
+            highlight={restaurantType.destacado}
           >
-            <ContentCardButton to={`/RestaurantPage/${restaurant.id}/${restaurant.titulo}`}>Saiba mais</ContentCardButton>
+            <ContentCardButton to={`/RestaurantPage/${restaurantType.id}/${restaurantType.titulo}`}>Saiba mais</ContentCardButton>
           </ContentCard>
         ))}
       </ContentList>
