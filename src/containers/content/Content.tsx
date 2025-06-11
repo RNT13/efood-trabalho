@@ -1,4 +1,5 @@
 import { useGetRestaurantsQuery } from '../../redux/api/restaurantsApi'
+import { RestaurantType } from '../../types/restaurantType'
 import { ContentCard, ContentCardButton, ContentContainer, ContentList } from './ContentStyles'
 
 const Content = () => {
@@ -10,18 +11,18 @@ const Content = () => {
   return (
     <ContentContainer className="container">
       <ContentList>
-        {restaurants.map(restaurantType => (
+        {restaurants.map((restaurant: RestaurantType) => (
           <ContentCard
-            key={restaurantType.id}
-            restaurantId={restaurantType.id.toString()}
-            image={restaurantType.capa}
-            title={restaurantType.titulo}
-            description={restaurantType.descricao}
-            stars={restaurantType.avaliacao}
-            country={restaurantType.tipo}
-            highlight={restaurantType.destacado}
+            key={restaurant.id}
+            restaurantId={restaurant.id.toString()}
+            image={restaurant.capa}
+            title={restaurant.titulo}
+            description={restaurant.descricao}
+            stars={restaurant.avaliacao}
+            country={restaurant.tipo}
+            highlight={restaurant.destacado}
           >
-            <ContentCardButton to={`/RestaurantPage/${restaurantType.id}/${restaurantType.titulo}`}>Saiba mais</ContentCardButton>
+            <ContentCardButton to={`/RestaurantPage/${restaurant.id}/${restaurant.titulo}`}>Saiba mais</ContentCardButton>
           </ContentCard>
         ))}
       </ContentList>

@@ -44,7 +44,7 @@ const RestaurantPage = () => {
   return (
     <RestaurantPageContainer className="container">
       <RestaurantPageContent>
-        {restaurant.cardapio.map(food => (
+        {restaurant.cardapio.map((food: FoodType) => (
           <RestaurantPageCard
             key={food.id}
             image={food.foto}

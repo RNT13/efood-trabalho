@@ -1,4 +1,4 @@
-import { RestaurantType } from '../../types/restaurantTypes'
+import { RestaurantType } from '../../types/restaurantType'
 import { apiSlice } from './apiSlice'
 
 export const restaurantsApi = apiSlice.injectEndpoints({

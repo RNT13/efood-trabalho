@@ -14,4 +14,5 @@ export const apiSlice = createApi({
   tagTypes: ['Restaurant', 'Food'],
   endpoints: () => ({})
 })
+
 export default apiSlice
