@@ -19,30 +19,38 @@ interface CartProps {
   onContinue: (cartTotal: number) => void
 }
 
-const Cart: React.FC<CartProps> = ({ onContinue }) => {
+export default function Cart({ onContinue }: CartProps) {
   const dispatch = useDispatch()
-  const cartItems = useSelector((state: RootState) => state.cart.items)
 
-  const expandedCartItems = cartItems.flatMap(item => Array.from({ length: item.quantity }, () => item))
+  const { items: cartItems } = useSelector((state: RootState) => state.cart)
 
-  const totalPrice = cartItems.reduce((acc, item) => {
-    const priceNumber = typeof item.price === 'string' ? Number(item.price.replace('R$', '').replace(',', '.').trim()) : Number(item.price)
-    return acc + priceNumber * item.quantity
-  }, 0)
+  const expendexCartItem = cartItems.flatMap(item => Array.from({ length: item.quantity }, () => item))
+
+  const totalPrice = cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0)
 
   const handleRemoveItem = (foodId: string) => {
     dispatch(decrementItemQuantity(foodId))
   }
 
+  if (cartItems.length === 0)
+    return (
+      <CartContainer>
+        <CartContent>
+          <p>Seu carrinho esta vazio</p>
+          <p>Adicione pelo menos um item ao carrinho</p>
+        </CartContent>
+      </CartContainer>
+    )
+
   return (
     <CartContainer>
       <CartContent>
-        {expandedCartItems.map((item, idx) => (
-          <CartItem key={item.foodId + '-' + idx}>
-            <CartItemImage src={item.image} alt={item.title} />
+        {expendexCartItem.map((item, idx) => (
+          <CartItem key={`${item.foodId}-${idx}`}>
+            <CartItemImage src={item.image} alt={item.name} />
             <CartItemInfo>
-              <p>{item.title}</p>
-              <CartItemPrice>R$ {item.price}</CartItemPrice>
+              <p>{item.name}</p>
+              <CartItemPrice>R$ {item.price.toFixed(2).replace('.', ',')}</CartItemPrice>
             </CartItemInfo>
             <div>
               <CartItemButton onClick={() => handleRemoveItem(item.foodId)}>
@@ -60,5 +68,3 @@ const Cart: React.FC<CartProps> = ({ onContinue }) => {
     </CartContainer>
   )
 }
-
-export default Cart

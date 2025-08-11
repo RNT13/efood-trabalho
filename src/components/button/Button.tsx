@@ -5,7 +5,7 @@ type ButtonProps = {
   to?: string
 }
 
-const Button = ({ onClick, children, to }: ButtonProps) => {
+export default function Button({ onClick, children, to }: ButtonProps) {
   if (to) {
     return (
       <LinkButtonContainer to={to} onClick={onClick}>
@@ -17,5 +17,3 @@ const Button = ({ onClick, children, to }: ButtonProps) => {
     return <ButtonContainer onClick={onClick}>{children}</ButtonContainer>
   }
 }
-
-export default Button

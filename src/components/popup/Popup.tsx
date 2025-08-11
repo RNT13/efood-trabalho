@@ -11,7 +11,7 @@ interface PopupProps {
   onClose: () => void
 }
 
-const Popup = ({ message, onClose, image, desdcription, price, title, children }: PopupProps) => {
+export default function Popup({ message, onClose, image, desdcription, price, title, children }: PopupProps) {
   return (
     <>
       <PopupOverlay onClick={onClose} />
@@ -29,5 +29,3 @@ const Popup = ({ message, onClose, image, desdcription, price, title, children }
     </>
   )
 }
-
-export default Popup

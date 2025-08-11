@@ -40,6 +40,11 @@ export const CartContent = styled.ul`
   &::-webkit-scrollbar {
     width: 0;
   }
+
+  p {
+    font-weight: 700;
+    padding: 0 24px;
+  }
 `
 
 export const CartItem = styled.li`

@@ -15,7 +15,7 @@ type CardProps = {
   children?: React.ReactNode
 }
 
-const Card = ({ foodId, restaurantId, image, title, description, stars, country, highlight, children, price, ...props }: CardProps) => {
+export default function Card({ foodId, restaurantId, image, title, description, price, stars, country, highlight, children, ...props }: CardProps) {
   const id = restaurantId || foodId
   if (!id) {
     return <p>Id inválido</p>
@@ -42,5 +42,3 @@ const Card = ({ foodId, restaurantId, image, title, description, stars, country,
     </CardContainer>
   )
 }
-
-export default Card

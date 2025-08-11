@@ -1,17 +1,23 @@
+import { PulseLoader } from 'react-spinners'
 import { useGetRestaurantsQuery } from '../../redux/api/restaurantsApi'
-import { RestaurantType } from '../../types/restaurantType'
+import { LoadingContainer } from '../../style/globalStyles'
 import { ContentCard, ContentCardButton, ContentContainer, ContentList } from './ContentStyles'
 
-const Content = () => {
-  const { data: restaurants = [], isLoading: loading, error } = useGetRestaurantsQuery()
+export default function Content() {
+  const { data: dataRestaurants = [], isLoading: loading, error } = useGetRestaurantsQuery()
 
-  if (loading) return <p>Carregando...</p>
+  if (loading)
+    return (
+      <LoadingContainer>
+        <PulseLoader color="#E66767" size={20} />
+      </LoadingContainer>
+    )
+
   if (error) return <p>Erro ao carregar restaurantes</p>
-
   return (
     <ContentContainer className="container">
       <ContentList>
-        {restaurants.map((restaurant: RestaurantType) => (
+        {dataRestaurants.map((restaurant: Restaurant) => (
           <ContentCard
             key={restaurant.id}
             restaurantId={restaurant.id.toString()}
@@ -29,5 +35,3 @@ const Content = () => {
     </ContentContainer>
   )
 }
-
-export default Content

@@ -9,10 +9,7 @@ export const ContentWrapper = styled.div`
   grid-area: content;
 `
 
-export const ContentContainer = styled.div`
-  ${(media.md, media.sm)} {
-  }
-`
+export const ContentContainer = styled.div``
 
 export const ContentList = styled.ul`
   width: 100%;

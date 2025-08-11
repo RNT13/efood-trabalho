@@ -1,27 +1,14 @@
-import React from 'react'
 import { ConfirmationButton, ConfirmationContainer } from './ConfirmationStyles'
 
 interface ConfirmationProps {
   orderId: string | null
   total: number
-  deliveryInfo: {
-    name: string
-    address: string
-    city: string
-    zip: string
-    number: string
-    complement: string
-  }
-  cartItems: {
-    foodId: string
-    title: string
-    quantity: number
-    price: string
-  }[]
+  deliveryInfo: Delivery
+  cartItems: CartItem[]
   onClose?: () => void
 }
 
-const Confirmation: React.FC<ConfirmationProps> = ({ orderId, total, deliveryInfo, cartItems, onClose }) => {
+export default function Confirmation({ orderId, total, deliveryInfo, cartItems, onClose }: ConfirmationProps) {
   const handleClick = () => {
     if (onClose) {
       onClose()
@@ -35,13 +22,17 @@ const Confirmation: React.FC<ConfirmationProps> = ({ orderId, total, deliveryInf
       <ul>
         {cartItems.map(item => (
           <li key={item.foodId}>
-            {item.title} - {item.quantity}x - {item.price}
+            {item.name} - {item.quantity}x - {item.price.toFixed(2).replace('.', ',')}
           </li>
         ))}
       </ul>
       <p>
-        <strong>Endereço de Entrega:</strong> {deliveryInfo.name}, {deliveryInfo.address}, {deliveryInfo.number}, {deliveryInfo.city} -{' '}
-        {deliveryInfo.zip}
+        <strong>Endereço de Entrega:</strong>
+        <br />
+        Quem receberá: {deliveryInfo.name},<br />
+        Rua: {deliveryInfo.address}, {deliveryInfo.number},<br />
+        Bairro: {deliveryInfo.city} - {deliveryInfo.zip}
+        <br />
         {deliveryInfo.complement && `, ${deliveryInfo.complement}`}
       </p>
       <p>
@@ -59,5 +50,3 @@ const Confirmation: React.FC<ConfirmationProps> = ({ orderId, total, deliveryInf
     </ConfirmationContainer>
   )
 }
-
-export default Confirmation

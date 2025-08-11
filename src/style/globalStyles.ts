@@ -39,3 +39,12 @@ export const OverLay = styled.div`
   background-color: rgba(0, 0, 0, 0.6);
   z-index: 0;
 `
+
+export const LoadingContainer = styled.div`
+  margin: 0 auto;
+  padding: 100px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+`

@@ -4,12 +4,10 @@ type TagProps = {
   children: string
 }
 
-const Tag = ({ children }: TagProps) => {
+export default function tag({ children }: TagProps) {
   return (
     <TagContainer>
       <TagContent>{children}</TagContent>
     </TagContainer>
   )
 }
-
-export default Tag

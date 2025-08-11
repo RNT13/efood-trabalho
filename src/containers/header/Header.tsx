@@ -1,10 +1,11 @@
 import { useState } from 'react'
 import { useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
+import { PulseLoader } from 'react-spinners'
 import AsideBar from '../../components/asideBar/AsideBar'
 import { useGetRestaurantByIdQuery } from '../../redux/api/restaurantsApi'
 import { RootState } from '../../redux/store'
-import { OverLay } from '../../style/globalStyles'
+import { LoadingContainer, OverLay } from '../../style/globalStyles'
 import {
   HeaderContainer,
   HeaderLogo,
@@ -18,7 +19,7 @@ import {
   NavItem
 } from './HeaderStyles'
 
-const Header = () => {
+export default function Header() {
   const { id } = useParams<{ id: string }>()
   const [showAsideBar, setShowAsideBar] = useState(false)
 
@@ -29,7 +30,12 @@ const Header = () => {
   const handleOpenAsideBar = () => setShowAsideBar(true)
   const handleCloseAsideBar = () => setShowAsideBar(false)
 
-  if (loading) return <p>Carregando restaurante...</p>
+  if (loading)
+    return (
+      <LoadingContainer>
+        <PulseLoader color="#E66767" size={20} />
+      </LoadingContainer>
+    )
 
   return (
     <HeaderContainer>
@@ -60,5 +66,3 @@ const Header = () => {
     </HeaderContainer>
   )
 }
-
-export default Header

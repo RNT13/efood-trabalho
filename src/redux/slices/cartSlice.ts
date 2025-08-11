@@ -1,13 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
-type CartItem = {
-  foodId: string
-  title: string
-  price: string
-  image: string
-  quantity: number
-}
-
 type CartState = {
   items: CartItem[]
 }
@@ -18,8 +10,8 @@ const initialState: CartState = {
 
 type AddToCartPayload = {
   foodId: string
-  title: string
-  price: string
+  name: string
+  price: number
   image: string
 }
 

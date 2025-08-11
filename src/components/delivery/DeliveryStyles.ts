@@ -50,13 +50,12 @@ export const DeliveryLabel = styled.label`
   color: ${theme.colors.textColor};
 `
 
-export const DeliveryInput = styled.input`
+export const InputGroup = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 50%;
   width: 100%;
-  padding: 8px;
-  border: 1px solid ${theme.colors.textColor};
-  background-color: ${theme.colors.secondaryColor};
-  color: ${theme.colors.black};
-  font-size: 14px;
 `
 
 export const DeliveryFooter = styled.div`
@@ -82,9 +81,4 @@ export const DeliveryRow = styled.div`
     flex-direction: column;
     gap: 10px;
   }
-`
-
-export const DeliveryInputHalf = styled(DeliveryInput)`
-  width: 50%;
-  width: 100%;
 `

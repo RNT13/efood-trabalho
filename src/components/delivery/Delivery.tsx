@@ -1,116 +1,101 @@
 /* eslint-disable prettier/prettier */
-import IMask from 'imask';
-import { useEffect, useRef, useState } from 'react';
-import {
-  DeliveryButton,
-  DeliveryContainer,
-  DeliveryFooter,
-  DeliveryForm,
-  DeliveryInput,
-  DeliveryInputHalf,
-  DeliveryLabel,
-  DeliveryRow,
-  DeliveryTitle
-} from './DeliveryStyles';
+import { FormikProvider, useFormik } from 'formik';
+import * as yup from 'yup';
+import { MaskedInputCheck } from '../../utils/maskedInputCheck';
+import { MaskedInput } from '../MaskedInput/MaskedInput';
+import { DeliveryButton, DeliveryContainer, DeliveryFooter, DeliveryForm, DeliveryLabel, DeliveryRow, DeliveryTitle, InputGroup } from './DeliveryStyles';
 
 interface DeliveryProps {
-  onContinue: (info: { name: string; address: string; city: string; zip: string; number: string; complement: string }) => void
+  onContinue: (deliveryInfo: Delivery) => void
   onBack?: () => void
 }
 
-const Delivery: React.FC<DeliveryProps> = ({ onContinue, onBack }) => {
-  const nameRef = useRef<HTMLInputElement>(null)
-  const addressRef = useRef<HTMLInputElement>(null)
-  const cityRef = useRef<HTMLInputElement>(null)
-  const zipRef = useRef<HTMLInputElement>(null)
-  const numeroRef = useRef<HTMLInputElement>(null)
-
-  useEffect(() => {
-    if (nameRef.current) {
-      const mask = IMask(nameRef.current, {
-        mask: /^[A-Za-z\s]*$/,
-      })
-      mask.updateValue();
-    }
-    if (addressRef.current) {
-      const mask = IMask(addressRef.current, {
-        mask: /^[A-Za-z\s]*$/,
-      })
-      mask.updateValue();
-    }
-    if (cityRef.current) {
-      const mask = IMask(cityRef.current, {
-        mask: /^[A-Za-z\s]*$/,
-      })
-      mask.updateValue();
-    }
-    if (zipRef.current) {
-      const mask = IMask(zipRef.current, {
-        mask: '00000-000',
-      })
-      mask.updateValue();
-    }
-    if (numeroRef.current) {
-      const mask = IMask(numeroRef.current, {
-        mask: '00000',
-      })
-      mask.updateValue();
-    }
-  }, [])
 
 
-  const [formData, setFormData] = useState({
-    name: '',
-    address: '',
-    city: '',
-    zip: '',
-    number: '',
-    complement: ''
+export default function Delivery({ onContinue, onBack }: DeliveryProps) {
+  const form = useFormik({
+    initialValues: {
+      name: '',
+      address: '',
+      city: '',
+      zip: '',
+      number: '',
+      complement: ''
+    },
+    validationSchema: yup.object({
+      name: yup.string().matches(/^[a-zA-Z\s]+$/, 'Use apenas letras').min(5, 'Minimo de 5 letras').required('Campo obrigatorio'),
+      address: yup.string().matches(/^[a-zA-Z\s]+$/, 'Use apenas letras').min(5, 'Minimo de 5 letras').required('Campo obrigatorio'),
+      city: yup.string().matches(/^[a-zA-Z\s]+$/, 'Use apenas letras').min(5, 'Minimo de 5 letras').required('Campo obrigatorio'),
+      zip: yup.string().matches(/^[0-9--]+$/, 'Use apenas numeros e tracinho').min(8, 'Minimo de 8 numeros').max(8, 'Maximo de 8 numeros').required('  Campo obrigatorio'),
+      number: yup.string().matches(/^[0-9]+$/, 'Use apenas numeros').min(1, 'Minimo de 1 numeros').max(9, 'Maximo de 9 numeros').required('Campo obrigatorio'),
+      complement: yup.string().matches(/^[a-zA-Z\s]+$/, 'Use apenas letras')
+    }),
+    onSubmit: async (values) => {
+      onContinue({
+        name: values.name,
+        address: values.address,
+        city: values.city,
+        zip: values.zip,
+        number: Number(values.number),
+        complement: values.complement
+      })
+    }
   })
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target
-    setFormData(prev => ({ ...prev, [name]: value }))
-  }
-
-  const handleSubmit = () => {
-    onContinue(formData)
-  }
 
   return (
     <DeliveryContainer>
       <DeliveryTitle>Entrega</DeliveryTitle>
-      <DeliveryForm>
-        <DeliveryLabel htmlFor="name">Quem irá receber?</DeliveryLabel>
-        <DeliveryInput ref={nameRef} id="name" name="name" value={formData.name} onChange={handleChange} placeholder="Nome Completo" autoComplete="name" />
-        <DeliveryLabel htmlFor="address">Endereço</DeliveryLabel>
-        <DeliveryInput ref={addressRef} id="address" name="address" value={formData.address} onChange={handleChange} placeholder="Rua Exemplo" autoComplete="address-line1" />
-        <DeliveryLabel htmlFor="city">Cidade</DeliveryLabel>
-        <DeliveryInput ref={cityRef} id="city" name="city" value={formData.city} onChange={handleChange} placeholder="Cidade" autoComplete="address-level2" />
-        <DeliveryRow>
-          <div>
-            <DeliveryLabel htmlFor="zip">CEP</DeliveryLabel>
-            <DeliveryInputHalf ref={zipRef} id="zip" name="zip" value={formData.zip} onChange={handleChange} placeholder="00000-000" autoComplete="postal-code" />
-          </div>
-          <div>
-            <DeliveryLabel htmlFor="number">Número</DeliveryLabel>
-            <DeliveryInputHalf ref={numeroRef} id="number" name="number" value={formData.number} onChange={handleChange} placeholder="123" autoComplete="address-line2" />
-          </div>
-        </DeliveryRow>
-        <DeliveryLabel htmlFor="complement">Complemento (opcional)</DeliveryLabel>
-        <DeliveryInput name="complement" value={formData.complement} onChange={handleChange} placeholder="Apartamento, bloco, etc." autoComplete="address-line3" />
-        <DeliveryFooter>
-          <DeliveryButton type="button" onClick={handleSubmit}>
-            Continuar com o pagamento
-          </DeliveryButton>
-          <DeliveryButton type="button" onClick={onBack}>
-            Voltar para o carrinho
-          </DeliveryButton>
-        </DeliveryFooter>
-      </DeliveryForm>
+
+      <FormikProvider value={form}>
+        <DeliveryForm onSubmit={form.handleSubmit}>
+
+          <InputGroup>
+            <DeliveryLabel htmlFor="name">Quem irá receber?</DeliveryLabel>
+            <MaskedInput id="name" name="name" placeholder="Nome Completo" className={MaskedInputCheck('name', form) ? 'error' : ''} showError />
+          </InputGroup>
+
+          <InputGroup>
+            <DeliveryLabel htmlFor="address">Endereço</DeliveryLabel>
+            <MaskedInput id="address" name="address" placeholder="Rua Exemplo" className={MaskedInputCheck('address', form) ? 'error' : ''} showError />
+          </InputGroup>
+
+          <InputGroup>
+            <DeliveryLabel htmlFor="city">Cidade</DeliveryLabel>
+            <MaskedInput id="city" name="city" placeholder="Cidade" className={MaskedInputCheck('city', form) ? 'error' : ''} showError />
+          </InputGroup>
+
+          <DeliveryRow>
+
+            <InputGroup>
+              <DeliveryLabel htmlFor="zip">CEP</DeliveryLabel>
+              <MaskedInput id="zip" name="zip" placeholder="00000-000" className={MaskedInputCheck('zip', form) ? 'error' : ''} showError />
+            </InputGroup>
+
+            <InputGroup>
+              <DeliveryLabel htmlFor="number">Número</DeliveryLabel>
+              <MaskedInput id="number" name="number" placeholder="123" className={MaskedInputCheck('number', form) ? 'error' : ''} showError />
+            </InputGroup>
+
+          </DeliveryRow>
+
+          <InputGroup>
+            <DeliveryLabel htmlFor="complement">Complemento (opcional)</DeliveryLabel>
+            <MaskedInput name="complement" placeholder="Apartamento, bloco, etc." className={MaskedInputCheck('complement', form) ? 'error' : ''} showError />
+          </InputGroup>
+
+          <DeliveryFooter>
+            <DeliveryButton type="button" onClick={form.submitForm}>
+              Continuar com o pagamento
+            </DeliveryButton>
+            <DeliveryButton type="button" onClick={onBack}>
+              Voltar para o carrinho
+            </DeliveryButton>
+          </DeliveryFooter>
+        </DeliveryForm>
+      </FormikProvider>
+
     </DeliveryContainer>
   )
 }
 
-export default Delivery
 

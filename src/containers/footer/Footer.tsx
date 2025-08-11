@@ -1,7 +1,7 @@
 import { FaGithub, FaInstagram, FaLinkedin } from 'react-icons/fa'
 import { FooterContainer, FooterLogo, FooterText, SocialLinks, SocialLinksItens } from './FooterStyles'
 
-const Footer = () => {
+export default function Footer() {
   return (
     <FooterContainer>
       <FooterLogo src="/images/logo.png" alt="Logo" />
@@ -23,4 +23,3 @@ const Footer = () => {
     </FooterContainer>
   )
 }
-export default Footer
