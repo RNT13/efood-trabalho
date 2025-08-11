@@ -11,7 +11,7 @@ import { AsideBarButton, AsideBarCloseButton, AsideBarContainer, AsideBarOverlay
 
 interface AsideBarProps {
   onClose: () => void
-  omSaveDelivery: (info: typeof Delivery) => void
+  omSaveDelivery?: (deliveryInfo: Delivery) => void
 }
 
 export default function AsideBar({ onClose }: AsideBarProps) {
