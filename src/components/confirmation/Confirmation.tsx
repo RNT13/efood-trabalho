@@ -1,3 +1,6 @@
+import { useDispatch } from 'react-redux'
+import { resetCart } from '../../redux/slices/cartSlice'
+import { resetCheckout } from '../../redux/slices/checkoutSlice'
 import { ConfirmationButton, ConfirmationContainer } from './ConfirmationStyles'
 
 interface ConfirmationProps {
@@ -5,14 +8,15 @@ interface ConfirmationProps {
   total: number
   deliveryInfo: Delivery
   cartItems: CartItem[]
-  onClose?: () => void
+  onClose: () => void
 }
 
 export default function Confirmation({ orderId, total, deliveryInfo, cartItems, onClose }: ConfirmationProps) {
+  const dispatch = useDispatch()
   const handleClick = () => {
-    if (onClose) {
-      onClose()
-    }
+    onClose()
+    dispatch(resetCheckout())
+    dispatch(resetCart())
   }
 
   return (
@@ -27,13 +31,17 @@ export default function Confirmation({ orderId, total, deliveryInfo, cartItems, 
         ))}
       </ul>
       <p>
-        <strong>Endereço de Entrega:</strong>
+        <strong>Dados de Entrega</strong>
         <br />
-        Quem receberá: {deliveryInfo.name},<br />
-        Rua: {deliveryInfo.address}, {deliveryInfo.number},<br />
-        Bairro: {deliveryInfo.city} - {deliveryInfo.zip}
+        <strong>Nome de quem receberá:</strong> {deliveryInfo.name}
         <br />
-        {deliveryInfo.complement && `, ${deliveryInfo.complement}`}
+        <strong>Endereço de Entrega:</strong> {deliveryInfo.address}
+        <br />
+        <strong>Numeroda da Casa </strong> {deliveryInfo.number}
+        <br />
+        <strong>Bairro de Entrega:</strong> {deliveryInfo.city}, {deliveryInfo.zip}
+        <br />
+        <strong>Complemento:</strong> {deliveryInfo.complement}
       </p>
       <p>
         <strong>Total:</strong> R$ {total.toFixed(2).replace('.', ',')}

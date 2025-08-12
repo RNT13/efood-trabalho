@@ -1,9 +1,11 @@
 import { combineReducers, configureStore as toolkitConfigureStore } from '@reduxjs/toolkit'
 import { apiSlice } from './api/apiSlice'
 import cartSlice from './slices/cartSlice'
+import checkoutSlice from './slices/checkoutSlice'
 
 const rootReducer = combineReducers({
   cart: cartSlice,
+  checkout: checkoutSlice,
   [apiSlice.reducerPath]: apiSlice.reducer
 })
 

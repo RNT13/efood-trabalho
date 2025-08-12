@@ -31,6 +31,9 @@ export const ContentList = styled.ul`
 `
 
 export const ContentCard = styled(Card)`
+  width: 100%;
+  height: 100%;
+
   ${media.sm} {
     flex-direction: column;
     align-items: flex-start;
@@ -70,6 +73,8 @@ export const ContentCard = styled(Card)`
 
 export const ContentCardButton = styled(LinkButtonContainer)`
   width: 100px;
+  height: 40px;
+  font-size: 1.2rem;
 
   &:hover {
     background-color: ${theme.colors.secondaryColor};

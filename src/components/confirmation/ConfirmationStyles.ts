@@ -23,7 +23,7 @@ export const ConfirmationContainer = styled.div`
     line-height: 22px;
   }
 
-  ${media.sm} {
+  ${media.md},${media.sm} {
     width: 100%;
     height: 100%;
 

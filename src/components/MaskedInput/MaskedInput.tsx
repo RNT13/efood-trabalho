@@ -27,9 +27,9 @@ export const MaskedInput = ({ name, mask, placeholder, className, showError = fa
   return (
     <MaskedInputContainer>
       {mask ? (
-        <IMaskInput {...commonProps} mask={mask} value={field.value || ''} onAccept={(value: string) => helpers.setValue(value)} />
+        <IMaskInput {...commonProps} mask={mask} value={String(field.value ?? '')} onAccept={(value: string) => helpers.setValue(value)} />
       ) : (
-        <input {...commonProps} value={field.value || ''} onChange={e => helpers.setValue(e.target.value)} />
+        <input {...commonProps} value={String(field.value ?? '')} onChange={e => helpers.setValue(e.target.value)} />
       )}
       {showError && meta.touched && meta.error && <div>{meta.error}</div>}
     </MaskedInputContainer>

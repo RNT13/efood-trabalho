@@ -59,7 +59,9 @@ export default function RestaurantPage() {
             description={food.descricao.length > 135 ? food.descricao.slice(0, 135) + '...' : food.descricao}
             foodId={food.id.toString()}
           >
-            <RestaurantCardButton onClick={() => handleOpenPopup(food)}>Ver Prato</RestaurantCardButton>
+            <div>
+              <RestaurantCardButton onClick={() => handleOpenPopup(food)}>Ver Prato</RestaurantCardButton>
+            </div>
           </RestaurantPageCard>
         ))}
       </RestaurantPageContent>

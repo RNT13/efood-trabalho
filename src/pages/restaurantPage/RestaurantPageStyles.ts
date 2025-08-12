@@ -19,6 +19,7 @@ export const RestaurantPageContainer = styled.div`
 `
 export const RestaurantPageContent = styled.div`
   width: 100%;
+  height: 100%;
   margin: 0 auto;
   padding: 100px 0;
   display: grid;
@@ -37,8 +38,9 @@ export const RestaurantPageContent = styled.div`
 
   ${media.sm} {
     width: 90%;
-    height: auto;
+    height: 100%;
     gap: 50px;
+    margin: 100px 0;
     flex-direction: column;
     justify-content: space-between;
 
@@ -89,8 +91,8 @@ export const RestaurantPageCard = styled(Card)`
     flex-direction: column;
     align-items: flex-start;
     padding: 16px;
-    min-width: 0;
     width: 100%;
+    height: 100%;
 
     ${CardImage} {
       width: 100%;
@@ -102,8 +104,13 @@ export const RestaurantPageCard = styled(Card)`
     }
 
     ${CardTitle} {
-      width: 50%;
       font-size: 3rem;
+      margin-bottom: 8px;
+    }
+
+    ${CardDescription} {
+      font-size: 2rem;
+      line-height: 2rem;
       margin-bottom: 8px;
     }
 

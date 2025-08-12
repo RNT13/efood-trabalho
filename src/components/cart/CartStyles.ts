@@ -105,6 +105,10 @@ export const CartDesdcription = styled.div`
     font-size: 14px;
     font-weight: 700;
     color: ${theme.colors.secondaryColor};
+
+    ${media.sm} {
+      font-size: 3rem;
+    }
   }
 `
 

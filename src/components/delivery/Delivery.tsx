@@ -1,6 +1,8 @@
 /* eslint-disable prettier/prettier */
 import { FormikProvider, useFormik } from 'formik';
+import { useSelector } from 'react-redux';
 import * as yup from 'yup';
+import { RootState } from '../../redux/store';
 import { MaskedInputCheck } from '../../utils/maskedInputCheck';
 import { MaskedInput } from '../MaskedInput/MaskedInput';
 import { DeliveryButton, DeliveryContainer, DeliveryFooter, DeliveryForm, DeliveryLabel, DeliveryRow, DeliveryTitle, InputGroup } from './DeliveryStyles';
@@ -13,8 +15,10 @@ interface DeliveryProps {
 
 
 export default function Delivery({ onContinue, onBack }: DeliveryProps) {
+  const { deliveryInfo } = useSelector((state: RootState) => state.checkout)
+
   const form = useFormik({
-    initialValues: {
+    initialValues: deliveryInfo || {
       name: '',
       address: '',
       city: '',
@@ -23,12 +27,12 @@ export default function Delivery({ onContinue, onBack }: DeliveryProps) {
       complement: ''
     },
     validationSchema: yup.object({
-      name: yup.string().matches(/^[a-zA-Z\s]+$/, 'Use apenas letras').min(5, 'Minimo de 5 letras').required('Campo obrigatorio'),
-      address: yup.string().matches(/^[a-zA-Z\s]+$/, 'Use apenas letras').min(5, 'Minimo de 5 letras').required('Campo obrigatorio'),
-      city: yup.string().matches(/^[a-zA-Z\s]+$/, 'Use apenas letras').min(5, 'Minimo de 5 letras').required('Campo obrigatorio'),
-      zip: yup.string().matches(/^[0-9--]+$/, 'Use apenas numeros e tracinho').min(8, 'Minimo de 8 numeros').max(8, 'Maximo de 8 numeros').required('  Campo obrigatorio'),
-      number: yup.string().matches(/^[0-9]+$/, 'Use apenas numeros').min(1, 'Minimo de 1 numeros').max(9, 'Maximo de 9 numeros').required('Campo obrigatorio'),
-      complement: yup.string().matches(/^[a-zA-Z\s]+$/, 'Use apenas letras')
+      name: yup.string().matches(/^[a-zA-Z\u00C0-\u017F\s]+$/, 'Use apenas letras').min(5, 'Minimo de 5 letras').required('Campo obrigatorio'),
+      address: yup.string().min(5, 'Minimo de 5 letras').required('Campo obrigatorio'),
+      city: yup.string().matches(/^[a-zA-Z\u00C0-\u017F\s]+$/, 'Use apenas letras').min(5, 'Minimo de 5 letras').required('Campo obrigatorio'),
+      zip: yup.string().min(9, 'Minimo de 9 numeros').required('  Campo obrigatorio'),
+      number: yup.string().required('Campo obrigatorio'),
+      complement: yup.string()
     }),
     onSubmit: async (values) => {
       onContinue({
@@ -68,12 +72,12 @@ export default function Delivery({ onContinue, onBack }: DeliveryProps) {
 
             <InputGroup>
               <DeliveryLabel htmlFor="zip">CEP</DeliveryLabel>
-              <MaskedInput id="zip" name="zip" placeholder="00000-000" className={MaskedInputCheck('zip', form) ? 'error' : ''} showError />
+              <MaskedInput id="zip" name="zip" placeholder="00000-000" mask="00000-000" className={MaskedInputCheck('zip', form) ? 'error' : ''} showError />
             </InputGroup>
 
             <InputGroup>
               <DeliveryLabel htmlFor="number">Número</DeliveryLabel>
-              <MaskedInput id="number" name="number" placeholder="123" className={MaskedInputCheck('number', form) ? 'error' : ''} showError />
+              <MaskedInput id="number" name="number" placeholder="123" mask="00000" className={MaskedInputCheck('number', form) ? 'error' : ''} showError />
             </InputGroup>
 
           </DeliveryRow>

@@ -16,7 +16,7 @@ export const PopupOverlay = styled.div`
 export const PopupContainer = styled.div`
   position: fixed;
   padding: 32px;
-  width: 1000px;
+  width: auto;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -42,16 +42,12 @@ export const PopupContainer = styled.div`
     width: 800px;
   }
 
-  ${media.sm} {
-    width: 90%;
+  ${media.md},${media.sm} {
+    width: 80%;
     height: auto;
     gap: 20px;
     flex-direction: column;
     justify-content: space-between;
-
-    h2 {
-      font-size: 3rem;
-    }
 
     img {
       margin-top: 50px;
@@ -60,8 +56,7 @@ export const PopupContainer = styled.div`
     }
 
     p {
-      font-size: 2.8rem;
-      padding: 20px 0px;
+      font-size: 3rem;
     }
 
     li {
@@ -70,7 +65,7 @@ export const PopupContainer = styled.div`
 
     button {
       width: 100%;
-      font-size: 3rem;
+      font-size: 2.3rem;
     }
   }
 `
@@ -82,6 +77,10 @@ export const PopupContent = styled.div`
   h2 {
     font-size: 18px;
     font-weight: 900;
+
+    ${media.sm} {
+      font-size: 3rem;
+    }
   }
 
   p {
@@ -89,11 +88,11 @@ export const PopupContent = styled.div`
     line-height: 22px;
     font-weight: 400;
     margin: 12px 0 16px 0;
-  }
 
-  ${media.sm} {
-    height: auto;
-    padding: 0px;
+    ${media.sm} {
+      font-size: 1.5rem;
+      line-height: 1.5rem;
+    }
   }
 `
 

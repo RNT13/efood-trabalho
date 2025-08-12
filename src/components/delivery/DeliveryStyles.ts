@@ -13,20 +13,11 @@ export const DeliveryContainer = styled.div`
 
   ${media.sm} {
     width: 100%;
-    height: 60%;
+    height: 80%;
 
-    h2 {
-      font-size: 3rem;
-    }
-
-    label {
-      font-size: 3rem;
-    }
-
-    input {
-      font-size: 3rem;
-    }
-
+    h2,
+    label,
+    input,
     button {
       font-size: 3rem;
     }

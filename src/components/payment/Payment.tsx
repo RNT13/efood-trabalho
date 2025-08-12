@@ -1,5 +1,7 @@
 import { FormikProvider, useFormik } from 'formik'
+import { useSelector } from 'react-redux'
 import * as yup from 'yup'
+import { RootState } from '../../redux/store'
 import { MaskedInputCheck } from '../../utils/maskedInputCheck'
 import { MaskedInput } from '../MaskedInput/MaskedInput'
 import { PaymentButton, PaymentContainer, PaymentFooter, PaymentForm, PaymentLabel, PaymentRow, PaymentTitle } from './PaymentStyles'
@@ -11,8 +13,10 @@ interface PaymentProps {
 }
 
 export default function Payment({ total, onBack, onFinalize }: PaymentProps) {
+  const { paymentInfo } = useSelector((state: RootState) => state.checkout)
+
   const form = useFormik({
-    initialValues: {
+    initialValues: paymentInfo || {
       cardName: '',
       cardNumber: '',
       cvv: '',
@@ -22,18 +26,26 @@ export default function Payment({ total, onBack, onFinalize }: PaymentProps) {
     validationSchema: yup.object({
       cardName: yup
         .string()
-        .matches(/^[a-zA-Z\s]+$/, 'Use apenas letras')
+        .matches(/^[a-zA-Z\u00C0-\u017F\s]+$/, 'Use apenas letras')
         .min(5, 'Minimo de 5 letras')
         .required('Campo obrigatorio'),
-      cardNumber: yup
+      cardNumber: yup.string().min(19, 'Minimo de 19 numeros').required('Campo obrigatorio'),
+      cvv: yup.string().min(3, 'Minimo de 3 numeros').required('Campo obrigatorio'),
+      expiryMonth: yup
         .string()
-        .matches(/^[0-9--]+$/, 'Use apenas numeros')
-        .min(16, 'Minimo de 16 numeros')
-        .max(16, 'Maximo de 16 numeros')
+        .min(2, 'Minimo de 2 numeros')
+        .matches(/^(0[1-9]|1[0-2])$/, 'O mês deve ser entre 01 e 12')
         .required('Campo obrigatorio'),
-      cvv: yup.string().min(3, 'Minimo de 3 numeros').max(3, 'Maximo de 3 numeros').required('Campo obrigatorio'),
-      expiryMonth: yup.string().min(2, 'Minimo de 2 numeros').max(2, 'Maximo de 2 numeros').required('Campo obrigatorio'),
-      expiryYear: yup.string().min(4, 'Minimo de 4 numeros').max(4, 'Maximo de 4 numeros').required('Campo obrigatorio')
+      expiryYear: yup
+        .string()
+        .matches(/^[0-9]+$/, 'Use apenas numeros')
+        .min(new Date().getFullYear().toString().length, `Minimo de ${new Date().getFullYear().toString().length} numeros`)
+        .max(new Date().getFullYear().toString().length, `Maximo de ${new Date().getFullYear().toString().length} numeros`)
+        .test('is-greater-or-equal-than-current-year', 'Cartão expirado', value => {
+          const year = Number(value)
+          return year >= new Date().getFullYear()
+        })
+        .required('Campo obrigatorio')
     }),
     onSubmit: async values => {
       onFinalize({
@@ -69,13 +81,22 @@ export default function Payment({ total, onBack, onFinalize }: PaymentProps) {
                 name="cardNumber"
                 type="text"
                 placeholder="0000 0000 0000 0000"
+                mask="0000 0000 0000 0000"
                 className={MaskedInputCheck('cardNumber', form) ? 'error' : ''}
                 showError
               />
             </div>
             <div>
               <PaymentLabel htmlFor="cvv">CVV</PaymentLabel>
-              <MaskedInput id="cvv" name="cvv" type="text" placeholder="123" className={MaskedInputCheck('cvv', form) ? 'error' : ''} showError />
+              <MaskedInput
+                id="cvv"
+                name="cvv"
+                type="text"
+                placeholder="123"
+                mask="000"
+                className={MaskedInputCheck('cvv', form) ? 'error' : ''}
+                showError
+              />
             </div>
           </PaymentRow>
 
@@ -87,6 +108,7 @@ export default function Payment({ total, onBack, onFinalize }: PaymentProps) {
                 name="expiryMonth"
                 type="text"
                 placeholder="MM"
+                mask="00"
                 className={MaskedInputCheck('expiryMonth', form) ? 'error' : ''}
                 showError
               />
@@ -98,6 +120,7 @@ export default function Payment({ total, onBack, onFinalize }: PaymentProps) {
                 name="expiryYear"
                 type="text"
                 placeholder="AAAA"
+                mask="0000"
                 className={MaskedInputCheck('expiryYear', form) ? 'error' : ''}
                 showError
               />

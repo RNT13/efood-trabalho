@@ -39,7 +39,7 @@ export const AsideBarContainer = styled.div`
   background-color: ${theme.colors.primaryColor};
 
   ${media.sm} {
-    width: 100%;
+    width: 90%;
     display: block;
   }
 `

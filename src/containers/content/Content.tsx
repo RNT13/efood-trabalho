@@ -28,7 +28,9 @@ export default function Content() {
             country={restaurant.tipo}
             highlight={restaurant.destacado}
           >
-            <ContentCardButton to={`/RestaurantPage/${restaurant.id}/${restaurant.titulo}`}>Saiba mais</ContentCardButton>
+            <div>
+              <ContentCardButton to={`/RestaurantPage/${restaurant.id}/${restaurant.titulo}`}>Saiba mais</ContentCardButton>
+            </div>
           </ContentCard>
         ))}
       </ContentList>

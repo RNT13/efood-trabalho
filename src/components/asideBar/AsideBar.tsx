@@ -1,6 +1,7 @@
 import { useState } from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useCreatePurchaseMutation } from '../../redux/api/purchaseApi'
+import { setDeliveryInfo, setPaymentInfo } from '../../redux/slices/checkoutSlice'
 import { RootState } from '../../redux/store'
 import Cart from '../cart/Cart'
 import Confirmation from '../confirmation/Confirmation'
@@ -15,12 +16,14 @@ interface AsideBarProps {
 }
 
 export default function AsideBar({ onClose }: AsideBarProps) {
+  const dispatch = useDispatch()
   const [total, setTotal] = useState<number>(0)
   const [step, setStep] = useState<'cart' | 'delivery' | 'payment' | 'confirmation'>('cart')
   const [showPopup, setShowPopup] = useState(false)
-  const [deliveryInfo, setDeliveryInfo] = useState<Delivery | null>(null)
-  const [paymentInfo, setPaymentInfo] = useState<Payment | null>(null)
 
+  //estados globais do Redux
+  const { deliveryInfo } = useSelector((state: RootState) => state.checkout)
+  const { paymentInfo } = useSelector((state: RootState) => state.checkout)
   const { items: cartItems } = useSelector((state: RootState) => state.cart)
 
   const [createPurchase, { data, isSuccess }] = useCreatePurchaseMutation()
@@ -30,13 +33,13 @@ export default function AsideBar({ onClose }: AsideBarProps) {
     setStep('delivery')
   }
 
-  const handleShowPaymentForm = (deliveryInfo: Delivery | null) => {
-    setDeliveryInfo(deliveryInfo)
+  const handleShowPaymentForm = (info: Delivery) => {
+    dispatch(setDeliveryInfo(info))
     setStep('payment')
   }
 
-  const handleFinalizePayment = (paymentInfo: Payment) => {
-    setPaymentInfo(paymentInfo)
+  const handleFinalizePayment = (info: Payment) => {
+    dispatch(setPaymentInfo(info))
     setShowPopup(true)
   }
 
@@ -116,9 +119,15 @@ export default function AsideBar({ onClose }: AsideBarProps) {
           </ul>
           {deliveryInfo && (
             <p>
-              <strong>Endereço de Entrega:</strong> {deliveryInfo.name}, {deliveryInfo.address}, {deliveryInfo.number}, {deliveryInfo.city} -{' '}
-              {deliveryInfo.zip}
-              {deliveryInfo.complement && `, ${deliveryInfo.complement}`}
+              <strong>Nome de quem receberá:</strong> {deliveryInfo.name}
+              <br />
+              <strong>Endereço de Entrega:</strong> {deliveryInfo.address}
+              <br />
+              <strong>Numeroda da Casa </strong> {deliveryInfo.number}
+              <br />
+              <strong>Bairro de Entrega:</strong> {deliveryInfo.city}, {deliveryInfo.zip}
+              <br />
+              <strong>Complemento:</strong> {deliveryInfo.complement}
             </p>
           )}
           <p>
